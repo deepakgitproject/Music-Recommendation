@@ -1,17 +1,75 @@
-# Music-Recommendation
+# Music Recommendation System 🎵
 
-<p>Music Recommendation System - Project Notes
- 1. Project Overview
- This project recommends songs based on lyrical similarity using TF-IDF vectorization and cosine similarity.
- The backend model is developed in a Jupyter notebook, while the frontend is built with Streamlit.
- The Spotify API is used to display album art for the recommended songs.
- 2. Technologies Used- Python Libraries: pandas, nltk, scikit-learn, streamlit, spotipy, pickle- NLP: Stemming (PorterStemmer), Tokenization, Text Cleaning- Recommendation Logic: TF-IDF + Cosine Similarity (Content-Based)- Web Interface: Streamlit (with dropdown & columns)- External API: Spotify API (album art fetching)
- 3. Jupyter Notebook - Backend (Data Preprocessing + Model)- Read CSV with pandas and sample 15,000 rows for performance.- Drop unnecessary columns like 'link' and reset index.- Clean text: lowercase, remove newlines and unwanted characters.- Tokenize and apply stemming to reduce words to root forms.- Use TF-IDF Vectorizer to convert lyrics into numerical vectors.- Calculate cosine similarity between songs.- Create a recommendation function to return top 20 similar songs.- Save the dataframe and similarity matrix using pickle for deployment.
- 4. Streamlit Web App - Frontend- Load saved 'df.pkl' and 'similarity.pkl' files.- Use Spotipy to authenticate and fetch album covers using Spotify API.- Use Streamlit to display the UI:
-  - Dropdown to select song
-  - Button to trigger recommendation
-  - 5 columns to display song names + album covers- Logic: Recommend top 5 similar songs (based on cosine similarity).
- 5. Interview Readiness
- Be prepared to answer:- Why use TF-IDF and not Word2Vec/BERT?- Why cosine similarity?- How does stemming help?- How would you scale this for real-time users?- How would you switch from content-based to collaborative filtering?- How could Spotify's audio features improve the system?
-Music Recommendation System - Project Notes
- 6. Possible Improvements- Use BERT embeddings for semantic understanding.- Add genre filtering or playlist generation.- Combine content + collaborative filtering (hybrid system).- Deploy the app to Streamlit Cloud, Heroku, or AWS.- Use Spotify audio features (tempo, energy, etc.) for better personalization.</p>
+This project is a content-based music recommendation system that suggests songs based on lyrical similarity. It uses a Python backend for model creation and a Streamlit frontend for an interactive user experience. Album art is fetched using the Spotify API to create a visually appealing interface.
+
+---
+
+## 📜 Project Overview
+
+The core of this project is to recommend songs by analyzing their lyrics. The process involves:
+1.  **Preprocessing** song lyrics from a dataset.
+2.  **Vectorizing** the cleaned lyrics using TF-IDF.
+3.  **Calculating** the cosine similarity between all songs to find the most similar ones.
+4.  **Building** an interactive web app where users can select a song and get the top 5 recommendations.
+
+---
+
+## ✨ Features
+
+-   **Lyrical Similarity**: Recommends songs with similar lyrical content.
+-   **Interactive UI**: A user-friendly interface built with Streamlit allows users to select a song from a dropdown menu.
+-   **Dynamic Album Art**: Fetches and displays album covers for recommended songs using the Spotify API.
+-   **Efficient Backend**: The similarity matrix is pre-computed and saved, ensuring quick recommendations.
+
+---
+
+## 💻 Technologies Used
+
+-   **Python Libraries**: `pandas`, `nltk`, `scikit-learn`, `streamlit`, `spotipy`, `pickle`
+-   **NLP Techniques**: Text Cleaning, Tokenization, and Stemming (PorterStemmer).
+-   **Recommendation Logic**: Term Frequency-Inverse Document Frequency (TF-IDF) & Cosine Similarity.
+-   **Web Interface**: Streamlit
+-   **External API**: Spotify API
+
+---
+
+## 📂 Project Structure
+
+### 1. Jupyter Notebook - Backend
+The backend logic is developed in a Jupyter Notebook (`model_training.ipynb`) and involves the following steps:
+-   **Data Loading**: Reading a CSV of songs and sampling 15,000 rows for efficient processing.
+-   **Text Preprocessing**: Cleaning the lyrics by converting text to lowercase, removing special characters, and applying stemming.
+-   **Vectorization**: Using `TfidfVectorizer` from scikit-learn to convert the processed lyrics into a matrix of TF-IDF features.
+-   **Similarity Calculation**: Computing the cosine similarity matrix between all song vectors.
+-   **Serialization**: Saving the final DataFrame and the similarity matrix into `pickle` files (`df.pkl` and `similarity.pkl`) for use in the web app.
+
+### 2. Streamlit Web App - Frontend
+The frontend (`app.py`) provides the user interface for the recommendation system:
+-   **Data Loading**: Loads the pre-processed data and similarity matrix from the `pickle` files.
+-   **Spotify Integration**: Authenticates with the Spotify API using `Spotipy` to fetch album art.
+-   **User Interface**:
+    -   A dropdown menu to select a song.
+    -   A "Recommend" button to trigger the recommendation logic.
+    -   Displays the top 5 recommended songs in a clean 5-column layout with their names and album covers.
+
+---
+
+## 🤔 Key Concepts for Discussion (Interview Prep)
+
+Be prepared to discuss the following topics:
+
+-   **Why TF-IDF over Word2Vec/BERT?**: TF-IDF is computationally efficient and works well for keyword-based similarity, making it a great baseline. While models like BERT understand semantics better, they require significantly more computational resources.
+-   **Why Cosine Similarity?**: It is effective for measuring similarity between documents represented as TF-IDF vectors, as it is independent of document length.
+-   **Role of Stemming**: Stemming reduces words to their root form (e.g., "running" -> "run"), which helps in grouping similar words and reducing the dimensionality of the data.
+-   **Scalability**: How would you handle millions of real-time users? (e.g., using a more efficient database, pre-calculating recommendations, using a distributed computing framework like Spark).
+-   **Collaborative Filtering**: How would you switch to a collaborative filtering approach? (e.g., using user-item interaction data to find users with similar tastes).
+-   **Hybrid Systems**: How could you improve the system using Spotify's audio features (e.g., `tempo`, `energy`, `danceability`)? (e.g., by combining content-based recommendations with audio feature similarity).
+
+---
+
+## 🚀 Future Improvements
+
+-   **Advanced Embeddings**: Use `BERT` or other transformer-based models for a deeper semantic understanding of lyrics.
+-   **Hybrid Recommender**: Combine the current content-based approach with collaborative filtering or Spotify's audio features for more personalized recommendations.
+-   **Feature Enhancement**: Add genre filtering or the ability to generate playlists.
+-   **Deployment**: Deploy the application to a cloud service like Streamlit Cloud, Heroku, or AWS for public access.
